@@ -54,15 +54,24 @@ export default function MainPage() {
     birthPlace: "디지털 세상",
     fullDescription: "Great Park는 단순한 공간이 아닙니다. 이곳은 위대함을 꿈꾸는 모든 이들의 성지이자, 영감과 창의성이 샘솟는 영원한 낙원입니다. 시간과 공간을 초월하여, 과거의 영웅들과 미래의 개척자들이 만나는 특별한 장소입니다.",
     timeline: [
-      { year: "2024", event: "Great Park의 탄생", icon: "🌟", description: "위대함을 기리는 특별한 공간이 디지털 세상에 탄생하다" },
+      { year: "5살", event: "동생 탄생으로 인한 인생에서의 소외", icon: "👶", description: "인생의 첫 시련, 그러나 이것이 독립심과 강인함의 시작이 되다" },
+      { year: "10살", event: "동물치료를 받았어야 했으나 치료받지 못함", icon: "🐾", description: "치유받지 못한 상처, 그러나 이를 통해 더 깊은 공감 능력을 키우다" },
+      { year: "1996", event: "Great Park의 탄생", icon: "🌟", description: "위대함을 기리는 특별한 공간이 디지털 세상에 탄생하다" },
       { year: "현재", event: "영감의 중심지로 성장", icon: "🎨", description: "수많은 방문자들에게 꿈과 영감을 선사하며" },
       { year: "진행중", event: "창의성의 폭발", icon: "💡", description: "매일매일 새로운 아이디어와 혁신이 꽃피우는 곳" },
       { year: "계속", event: "무한한 가능성 탐험", icon: "🚀", description: "한계 없는 상상력으로 미래를 향해 나아가다" },
       { year: "영원", event: "레거시의 전승", icon: "👑", description: "과거의 위대함을 기억하고 미래의 전설을 만들다" },
       { year: "미래", event: "새로운 시대의 시작", icon: "✨", description: "Great Park는 계속해서 진화하며 더 큰 꿈을 향해" },
-      { year: "∞", event: "끝없는 여정", icon: "🌈", description: "위대함은 멈추지 않습니다. 우리의 여정은 계속됩니다" },
+      { year: "∞", event: "끝없는 여정", icon: "��", description: "위대함은 멈추지 않습니다. 우리의 여정은 계속됩니다" },
     ],
     achievements: [
+      {
+        title: "GMP 경시대회 3관왕",
+        category: "학업",
+        icon: "🏆",
+        description: "경시대회에서 3관왕을 차지하며 탁월한 실력을 입증하다",
+        impact: "노력과 재능의 완벽한 조화"
+      },
       {
         title: "영감의 성지",
         category: "비전",
@@ -107,6 +116,8 @@ export default function MainPage() {
       },
     ],
     quotes: [
+      "나는 언제 일해? 난 빨리 일하고 싶단 말이야",
+      "오늘도 배웠다 - Great Park",
       "위대함은 태어나는 것이 아니라, 만들어지는 것입니다.",
       "Great Park에서는 모든 꿈이 현실이 됩니다.",
       "과거의 영웅을 기억하고, 미래의 전설을 만듭니다.",
