@@ -1,9 +1,9 @@
 "use client"
 
 import { signIn } from "next-auth/react"
-import { useState, FormEvent } from "react"
+import { useState, FormEvent, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+import Snowfall from "react-snowfall"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -11,15 +11,19 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [stars] = useState(() =>
-    [...Array(100)].map(() => ({
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-      delay: Math.random() * 5,
-      duration: 3 + Math.random() * 4,
-      size: Math.random() * 2 + 1,
-    }))
-  )
+  const [stars, setStars] = useState<Array<{top: number, left: number, delay: number, duration: number, size: number}>>([])
+
+  useEffect(() => {
+    setStars(
+      [...Array(100)].map(() => ({
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: 3 + Math.random() * 4,
+        size: Math.random() * 2 + 1,
+      }))
+    )
+  }, [])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -47,7 +51,19 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-950 to-black">
+      {/* Snowfall Effect */}
+      <Snowfall
+        color="#fff"
+        snowflakeCount={200}
+        style={{
+          position: 'fixed',
+          width: '100vw',
+          height: '100vh',
+          zIndex: 1
+        }}
+      />
+
       {/* Animated Background Stars */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {stars.map((star, i) => (
@@ -67,8 +83,8 @@ export default function LoginPage() {
       </div>
 
       {/* Floating Shapes */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-float-delayed"></div>
+      <div className="absolute top-20 left-10 w-72 h-72 bg-gray-700/10 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-gray-600/10 rounded-full blur-3xl animate-float-delayed"></div>
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -163,27 +179,6 @@ export default function LoginPage() {
                     )}
                   </div>
                 </button>
-
-                {/* Divider */}
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-white/20"></div>
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-4 bg-transparent text-purple-200">또는</span>
-                  </div>
-                </div>
-
-                {/* Sign Up Link */}
-                {/* <div className="text-center">
-                  <span className="text-purple-200 text-sm sm:text-base">아직 계정이 없으신가요? </span>
-                  <Link
-                    href="/join"
-                    className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-400 hover:from-yellow-300 hover:to-pink-300 transition-all text-sm sm:text-base inline-block hover:scale-110 transform"
-                  >
-                    회원가입 →
-                  </Link>
-                </div> */}
               </form>
             </div>
           </div>
