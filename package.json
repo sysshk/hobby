@@ -16,6 +16,7 @@
     "@prisma/client": "^7.1.0",
     "@types/ws": "^8.18.1",
     "bcryptjs": "^3.0.3",
+    "framer-motion": "^12.36.0",
     "next": "^16.1.0",
     "next-auth": "^5.0.0-beta.30",
     "react": "19.2.1",
@@ -34,6 +35,6 @@
     "eslint-config-next": "16.0.8",
     "prisma": "^7.1.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "5.9.3"
   }
 }

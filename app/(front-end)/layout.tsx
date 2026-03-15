@@ -10,9 +10,9 @@ export default function FrontEndLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isLoginPage = pathname === '/login';
+  const hideTopbar = pathname === '/login' || pathname === '/join';
 
-  if (isLoginPage) {
+  if (hideTopbar) {
     return (
       <SessionProvider>
         {children}
@@ -22,12 +22,10 @@ export default function FrontEndLayout({
 
   return (
     <SessionProvider>
-      <div className='h-screen flex flex-col'>
-        <FrontTopbar />
-        <main className='flex-1 overflow-y-auto'>
-          {children}
-        </main>
-      </div>
+      <FrontTopbar />
+      <main className="pt-16">
+        {children}
+      </main>
     </SessionProvider>
   )
 }

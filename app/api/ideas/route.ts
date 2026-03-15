@@ -21,6 +21,7 @@ export async function GET() {
       author: "익명",
       likes: idea.likes.length,
       isLiked: session?.user?.id ? idea.likes.some(like => like.userId === session.user?.id) : false,
+      isMine: session?.user?.id === idea.authorId,
       date: idea.createdAt.toLocaleDateString("ko-KR"),
     }))
 
@@ -61,6 +62,7 @@ export async function POST(request: Request) {
       author: "익명",
       likes: 0,
       isLiked: false,
+      isMine: true,
       date: idea.createdAt.toLocaleDateString("ko-KR"),
     })
   } catch (error) {

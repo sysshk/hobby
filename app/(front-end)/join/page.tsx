@@ -32,9 +32,7 @@ export default function JoinPage() {
     try {
       const response = await fetch("/playground/api/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: username, password, name }),
       })
 
@@ -52,100 +50,77 @@ export default function JoinPage() {
     }
   }
 
+  const inputClass =
+    "w-full px-4 py-3.5 rounded-xl bg-white border border-[#E8E8E7] text-[15px] text-[#111111] placeholder:text-[#999999] outline-none focus:border-[#C41E3A] focus:border-2 transition-colors"
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
-        <div>
-          <h2 className="text-center text-3xl font-bold text-gray-900">
-            회원가입
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                이름
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="이름을 입력하세요 (선택사항)"
-              />
-            </div>
-            <div>
-              <label htmlFor="user_id" className="block text-sm font-medium text-gray-700">
-                아이디
-              </label>
-              <input
-                id="user_id"
-                name="user_id"
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="아이디를 입력하세요"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                비밀번호
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="비밀번호를 입력하세요 (최소 6자)"
-              />
-            </div>
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                비밀번호 확인
-              </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                required
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="비밀번호를 다시 입력하세요"
-              />
-            </div>
+    <div className="min-h-screen bg-[#F5F3F3] flex flex-col">
+      {/* Status area + Header */}
+      <div className="flex items-center gap-3 px-6 py-4">
+        <button onClick={() => router.back()} className="text-[#111111] hover:text-[#C41E3A] transition-colors">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <h2 className="text-[18px] font-semibold text-[#111111] tracking-tight">회원가입</h2>
+      </div>
+
+      {/* Body */}
+      <div className="flex-1 px-6 pb-8">
+        <div className="max-w-[402px] mx-auto flex flex-col gap-5">
+          {/* Titles */}
+          <div className="flex flex-col gap-2">
+            <h1 className="text-[26px] font-semibold text-[#111111] tracking-tight leading-[1.3]">
+              위대한 전당에<br />오신 것을 환영합니다
+            </h1>
+            <p className="text-[14px] text-[#666666]">아래 정보를 입력하여 가입하세요</p>
           </div>
 
-          {error && (
-            <div className="text-red-500 text-sm text-center">
-              {error}
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-semibold text-[#111111]">이름</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름을 입력하세요" className={inputClass} />
             </div>
-          )}
 
-          <div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-semibold text-[#111111]">이메일</label>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="이메일을 입력하세요" className={inputClass} required />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-semibold text-[#111111]">비밀번호</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호를 입력하세요" className={inputClass} required />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-semibold text-[#111111]">비밀번호 확인</label>
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="비밀번호를 다시 입력하세요" className={inputClass} required />
+            </div>
+
+            {error && (
+              <p className="text-[13px] text-[#C41E3A] text-center">{error}</p>
+            )}
+
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="w-full py-3.5 rounded-full bg-[#C41E3A] text-white text-[15px] font-semibold hover:bg-[#8B1425] transition-colors disabled:opacity-60 cursor-pointer"
             >
-              {loading ? "가입 중..." : "회원가입"}
+              {loading ? (
+                <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                "가입하기"
+              )}
             </button>
-          </div>
+          </form>
 
-          <div className="text-center text-sm">
-            <span className="text-gray-600">이미 계정이 있으신가요? </span>
-            <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+          {/* Footer */}
+          <div className="flex items-center gap-1 text-[13px] justify-center">
+            <span className="text-[#999999]">이미 회원이신가요?</span>
+            <Link href="/login" className="text-[#C41E3A] font-semibold hover:underline">
               로그인
             </Link>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )
