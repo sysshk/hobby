@@ -1,6 +1,6 @@
-# 배양공정 MES — 배양 공정관리 시스템
+# MES — 공정관리 시스템
 
-발효/배양 공정을 실행·모니터링하기 위한 **MES(Manufacturing Execution System)** 프레임입니다.
+발효/공정을 실행·모니터링하기 위한 **MES(Manufacturing Execution System)** 프레임입니다.
 현재 단계는 **틀/프레임 + 더미 배양데이터**로 구성되어 있으며, 실제 DB 연동 로직은 이후 단계에서 붙입니다.
 
 ## 주요 화면

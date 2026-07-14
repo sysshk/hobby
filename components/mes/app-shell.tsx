@@ -26,8 +26,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
             <IconFlask />
           </span>
           <div className="leading-tight">
-            <p className="text-sm font-bold tracking-tight">배양공정 MES</p>
-            <p className="text-[10px] text-[var(--text-tertiary)]">배양 공정관리</p>
+            <p className="text-sm font-bold tracking-tight">MES</p>
+            <p className="text-[10px] text-[var(--text-tertiary)]">공정관리</p>
           </div>
         </div>
 

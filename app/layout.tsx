@@ -9,8 +9,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "배양공정 MES | 공정관리 시스템",
-  description: "발효/배양 공정 실행·모니터링 시스템 (Manufacturing Execution System)",
+  title: "MES | 공정관리 시스템",
+  description: "공정 실행·모니터링 시스템 (Manufacturing Execution System)",
 };
 
 export default function RootLayout({

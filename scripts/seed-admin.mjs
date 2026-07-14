@@ -1,8 +1,8 @@
 // 테스트 관리자 계정 시드 스크립트
 // 실행: node scripts/seed-admin.mjs   (DATABASE_URL 필요, .env 자동 로드)
 //
-// 로그인 정보: admin / 대서우1234
-// - 앱은 email 컬럼을 로그인 ID로 사용하므로 email="admin" 으로 등록한다.
+// 로그인 정보: admin@admin.com / 대서우1234
+// - 앱은 email 컬럼을 로그인 ID로 사용한다 (이메일 형식 필요).
 // - 이미 있으면 비밀번호/이름을 갱신(upsert)한다.
 //
 // 주의: 이 환경(웹/원격)은 네트워크 egress 정책으로 Neon DB에 도달할 수 없어
@@ -13,7 +13,7 @@ import { neon } from "@neondatabase/serverless";
 import bcrypt from "bcryptjs";
 import { randomUUID } from "node:crypto";
 
-const EMAIL = "admin";
+const EMAIL = "admin@admin.com";
 const PASSWORD = "대서우1234";
 const NAME = "관리자";
 const ROLE = "admin";

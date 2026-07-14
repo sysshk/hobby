@@ -27,7 +27,7 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-7xl space-y-6">
       <header>
         <h1 className="text-2xl font-bold tracking-tight">대시보드</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">배양 공정 실시간 현황 요약</p>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">공정 실시간 현황 요약</p>
       </header>
 
       {/* KPI */}

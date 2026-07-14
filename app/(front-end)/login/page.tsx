@@ -46,12 +46,12 @@ export default function LoginPage() {
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary/15 text-primary">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3h6M10 3v6l-5.5 9A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg>
           </span>
-          <span className="font-bold tracking-tight">배양공정 MES</span>
+          <span className="font-bold tracking-tight">MES</span>
         </div>
         <div className="relative">
           <p className="mb-3 text-xs font-bold uppercase tracking-[4px] text-primary">Manufacturing Execution System</p>
           <h2 className="text-4xl font-bold leading-tight text-[var(--text-primary)]">
-            배양 공정을<br />한 화면에서 관리하세요
+            공정을<br />한 화면에서 관리하세요
           </h2>
           <p className="mt-4 max-w-sm text-sm text-[var(--text-secondary)]">
             발효조 실시간 모니터링부터 배치 이력·수율·품질까지, 현장 공정 데이터를 통합 관리합니다.
