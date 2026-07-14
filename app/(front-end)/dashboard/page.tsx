@@ -96,7 +96,7 @@ export default async function DashboardPage() {
               {batches.slice(0, 5).map((b) => (
                 <tr key={b.id} className="border-b border-border last:border-0 hover:bg-card-hover">
                   <td className="px-5 py-3">
-                    <Link href={`/batches/${b.id}`} className="font-semibold text-primary hover:underline">{b.batchNo}</Link>
+                    <span className="font-semibold text-[var(--text-secondary)]">{b.batchNo}</span>
                   </td>
                   <td className="px-5 py-3">{b.product}</td>
                   <td className="px-5 py-3 text-[var(--text-secondary)]">{b.reactor}</td>

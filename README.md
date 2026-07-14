@@ -13,13 +13,31 @@
 
 ## 도메인 모델 (Prisma)
 
-- `Product` — 생산 제품 (예: 배양제품 A)
-- `Reactor` — 발효조/배양기 설비
-- `Batch` — 배치/로트 (제품·발효조·상태·수율)
-- `ProcessStep` — 공정 단계 (종균배양 → 본배양 → 회수 → 정제)
-- `Measurement` — 배양 시계열 측정값 (pH, DO, 온도, 교반속도, 글루코스, 생균수 등)
-- `QualityCheck` — 품질 검사 결과
+- `Batch` — 발효 배치 (batchNumber, controlType, finalYield)
+- `Record` — 배치별 시간 시계열 (timeHr, temperature, ph, dissolvedO2, substrate, penicillin)
 - `User` / `Account` / `Session` — 인증 (next-auth)
+
+## 발효 배치 데이터 (IndPenSim)
+
+원본 `.mat` → CSV 변환 후 UI에서 업로드하면 Neon DB에 저장됩니다.
+
+```bash
+# 1) 패키지 (이미 설치됨)
+npm install papaparse recharts @prisma/client
+npm install -D @types/papaparse
+
+# 2) 스키마를 DB에 반영
+npx prisma db push
+#   (로컬 개발환경이 없으면 scripts/neon-migrate-batch.sql 을 Neon Query 창에 붙여넣어 실행)
+
+# 3) 실제 .mat → CSV 변환 (로컬)
+pip install scipy numpy pandas
+python scripts/mat_to_csv.py IndPenSim.mat batch1.csv --batch 1 --control recipe
+```
+
+- CSV 컬럼: `batchNumber, controlType, timeHr, temperature, ph, dissolvedO2, substrate, penicillin`
+- 화면: `/mes/batches` 에서 **＋ CSV 업로드** → 목록(수율 내림차순) → 배치 클릭 → 시계열 차트
+- 테스트용 샘플: `scripts/sample-indpensim.csv` (배치 2개)
 
 ## 기술 스택
 
