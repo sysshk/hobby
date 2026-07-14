@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Penicillin MES — Prisma schema
+// 배양 공정관리(발효) 도메인 + next-auth 인증 모델
+// learn more: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -10,59 +8,27 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
+
+// ─────────────────────────────────────────────
+// 인증 (next-auth)
+// ─────────────────────────────────────────────
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String         @unique
-  emailVerified DateTime?
-  password      String
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  achievements  Achievement[]
-  activities    Activity[]
-  stats         UserStats?
-  ideas         Idea[]
-  ideaLikes     IdeaLike[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-}
-
-model Achievement {
-  id          String   @id @default(cuid())
-  userId      String
-  title       String
-  description String
-  icon        String
-  category    String
-  earnedAt    DateTime @default(now())
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Activity {
-  id          String   @id @default(cuid())
-  userId      String
-  type        String
-  title       String
-  description String?
-  createdAt   DateTime @default(now())
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model UserStats {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  totalProjects   Int      @default(0)
-  totalTasks      Int      @default(0)
-  completedTasks  Int      @default(0)
-  activeStreak    Int      @default(0)
-  totalPoints     Int      @default(0)
-  level           Int      @default(1)
-  updatedAt       DateTime @updatedAt
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String         @id @default(cuid())
+  name           String?
+  email          String         @unique
+  emailVerified  DateTime?
+  password       String
+  image          String?
+  role           String         @default("operator") // operator | supervisor | admin
+  accounts       Account[]
+  sessions       Session[]
+  createdBatches Batch[]
+  qualityChecks  QualityCheck[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 model Account {
@@ -100,21 +66,152 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Idea {
-  id        String     @id @default(cuid())
-  text      String
-  authorId  String
-  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  likes     IdeaLike[]
-  createdAt DateTime   @default(now())
+// ─────────────────────────────────────────────
+// 배양 공정 도메인
+// ─────────────────────────────────────────────
+
+/// 생산 제품 (예: Penicillin G)
+model Product {
+  id          String   @id @default(cuid())
+  code        String   @unique // 제품 코드 (예: PEN-G)
+  name        String // 제품명 (예: Penicillin G)
+  strain      String? // 생산 균주 (예: Penicillium chrysogenum)
+  targetTiter Float? // 목표 역가 (U/mL)
+  description String?
+  batches     Batch[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-model IdeaLike {
-  id      String @id @default(cuid())
-  ideaId  String
-  userId  String
-  idea    Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+/// 발효조 / 배양기 설비
+model Reactor {
+  id         String        @id @default(cuid())
+  code       String        @unique // 설비 코드 (예: FR-101)
+  name       String // 발효조명
+  capacityL  Float // 용량 (L)
+  status     ReactorStatus @default(IDLE)
+  location   String?
+  batches    Batch[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
 
-  @@unique([ideaId, userId])
+enum ReactorStatus {
+  IDLE // 대기
+  RUNNING // 가동중
+  CLEANING // 세척/CIP
+  MAINTENANCE // 정비
+}
+
+/// 배치 / 로트
+model Batch {
+  id            String         @id @default(cuid())
+  batchNo       String         @unique // 배치 번호 (예: B-2026-0714-01)
+  productId     String
+  product       Product        @relation(fields: [productId], references: [id])
+  reactorId     String?
+  reactor       Reactor?       @relation(fields: [reactorId], references: [id])
+  status        BatchStatus    @default(PLANNED)
+  plannedVolL   Float? // 계획 배양량 (L)
+  plannedYield  Float? // 목표 수율 (%)
+  actualYield   Float? // 실제 수율 (%)
+  finalTiter    Float? // 최종 역가 (U/mL)
+  startedAt     DateTime?
+  endedAt       DateTime?
+  createdById   String?
+  createdBy     User?          @relation(fields: [createdById], references: [id])
+  steps         ProcessStep[]
+  measurements  Measurement[]
+  qualityChecks QualityCheck[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([status])
+  @@index([productId])
+}
+
+enum BatchStatus {
+  PLANNED // 계획
+  RUNNING // 배양중
+  COMPLETED // 완료
+  ON_HOLD // 보류
+  ABORTED // 폐기
+}
+
+/// 공정 단계 (종균배양 → 본배양 → 회수 → 정제)
+model ProcessStep {
+  id        String     @id @default(cuid())
+  batchId   String
+  batch     Batch      @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  name      String // 단계명 (예: 본배양)
+  stepType  StepType
+  sequence  Int // 순서
+  status    StepStatus @default(PENDING)
+  startedAt DateTime?
+  endedAt   DateTime?
+  notes     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([batchId, sequence])
+}
+
+enum StepType {
+  SEED // 종균배양
+  FERMENTATION // 본배양
+  HARVEST // 회수
+  PURIFICATION // 정제
+  QC // 품질검사
+}
+
+enum StepStatus {
+  PENDING // 대기
+  IN_PROGRESS // 진행중
+  DONE // 완료
+  SKIPPED // 생략
+}
+
+/// 배양 시계열 측정값 (pH, DO, 온도, 교반, 글루코스, 생균수 등)
+model Measurement {
+  id         String     @id @default(cuid())
+  batchId    String
+  batch      Batch      @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  metric     MetricType
+  value      Float
+  unit       String // 단위 (예: °C, %, g/L)
+  recordedAt DateTime   @default(now())
+
+  @@index([batchId, metric, recordedAt])
+}
+
+enum MetricType {
+  PH // pH
+  DO // 용존산소 (Dissolved Oxygen, %)
+  TEMP // 온도 (°C)
+  AGITATION // 교반속도 (rpm)
+  GLUCOSE // 글루코스 농도 (g/L)
+  BIOMASS // 생균수/균체농도 (g/L)
+  TITER // 역가 (U/mL)
+}
+
+/// 품질 검사 결과
+model QualityCheck {
+  id          String    @id @default(cuid())
+  batchId     String
+  batch       Batch     @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  item        String // 검사 항목 (예: 무균시험)
+  result      QcResult  @default(PENDING)
+  value       String? // 측정값/판정 상세
+  checkedById String?
+  checkedBy   User?     @relation(fields: [checkedById], references: [id])
+  checkedAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([batchId])
+}
+
+enum QcResult {
+  PENDING // 검사중
+  PASS // 합격
+  FAIL // 부적합
 }

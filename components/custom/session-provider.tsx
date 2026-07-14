@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 
 export default function SessionProvider({ children }: { children: ReactNode }) {
   return (
-    <NextAuthSessionProvider basePath="/playground/api/auth">
+    <NextAuthSessionProvider basePath="/mes/api/auth">
       {children}
     </NextAuthSessionProvider>
   );

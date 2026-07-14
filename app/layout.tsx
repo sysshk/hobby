@@ -9,8 +9,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "위대한 전당 | Great Park",
-  description: "함께 만들어가는 더 나은 세상 - 아이디어 공유 플랫폼",
+  title: "Penicillin MES | 배양 공정관리 시스템",
+  description: "페니실린 발효/배양 공정 실행·모니터링 시스템 (Manufacturing Execution System)",
 };
 
 export default function RootLayout({

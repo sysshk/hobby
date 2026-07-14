@@ -1,8 +1,11 @@
 'use client';
 
 import SessionProvider from '@/components/custom/session-provider';
-import FrontTopbar from '@/components/custom/front-topbar';
+import AppShell from '@/components/mes/app-shell';
 import { usePathname } from 'next/navigation';
+
+// 인증 화면은 셸 없이, 그 외 MES 화면은 사이드바 셸로 감싼다.
+const BARE_ROUTES = ['/login', '/join'];
 
 export default function FrontEndLayout({
   children,
@@ -10,22 +13,15 @@ export default function FrontEndLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const hideTopbar = pathname === '/login' || pathname === '/join';
+  const bare = BARE_ROUTES.includes(pathname);
 
-  if (hideTopbar) {
-    return (
-      <SessionProvider>
-        {children}
-      </SessionProvider>
-    )
+  if (bare) {
+    return <SessionProvider>{children}</SessionProvider>;
   }
 
   return (
     <SessionProvider>
-      <FrontTopbar />
-      <main className="pt-16">
-        {children}
-      </main>
+      <AppShell>{children}</AppShell>
     </SessionProvider>
-  )
+  );
 }
