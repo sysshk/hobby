@@ -7,6 +7,7 @@
     "build": "dotenv -e .env.production -- prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
+    "seed:admin": "node scripts/seed-admin.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {

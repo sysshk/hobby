@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// Penicillin MES — 더미 배양 데이터 (프레임 단계용)
+// 배양공정 MES — 더미 배양 데이터 (프레임 단계용)
 // 실제 DB 연동 전까지 화면 골격을 채우는 결정적(deterministic) 목업.
 // Math.random 미사용 → SSR/CSR 하이드레이션 일관성 보장.
 // ─────────────────────────────────────────────
@@ -88,43 +88,43 @@ export const STEP_STATUS_LABEL: Record<StepStatus, string> = {
 
 export const batches: Batch[] = [
   {
-    id: "b1", batchNo: "B-2026-0714-01", product: "Penicillin G", strain: "P. chrysogenum PC-9",
+    id: "b1", batchNo: "B-2026-0714-01", product: "배양제품 A", strain: "생산균주 ST-9",
     reactor: "FR-101", status: "RUNNING", progress: 62, currentStep: "본배양 (Fermentation)",
     plannedYield: 85, actualYield: null, titer: 41200, volumeL: 5000,
     startedAt: "2026-07-11 08:20", operator: "김공정",
   },
   {
-    id: "b2", batchNo: "B-2026-0713-02", product: "Penicillin V", strain: "P. chrysogenum PC-7",
+    id: "b2", batchNo: "B-2026-0713-02", product: "배양제품 B", strain: "생산균주 ST-7",
     reactor: "FR-102", status: "RUNNING", progress: 88, currentStep: "본배양 (Fermentation)",
     plannedYield: 82, actualYield: null, titer: 38500, volumeL: 5000,
     startedAt: "2026-07-10 22:05", operator: "박배양",
   },
   {
-    id: "b3", batchNo: "B-2026-0712-01", product: "Penicillin G", strain: "P. chrysogenum PC-9",
+    id: "b3", batchNo: "B-2026-0712-01", product: "배양제품 A", strain: "생산균주 ST-9",
     reactor: "FR-103", status: "RUNNING", progress: 34, currentStep: "종균배양 (Seed)",
     plannedYield: 85, actualYield: null, titer: 12800, volumeL: 2000,
     startedAt: "2026-07-13 06:40", operator: "이발효",
   },
   {
-    id: "b4", batchNo: "B-2026-0710-03", product: "Penicillin G", strain: "P. chrysogenum PC-9",
+    id: "b4", batchNo: "B-2026-0710-03", product: "배양제품 A", strain: "생산균주 ST-9",
     reactor: "FR-101", status: "COMPLETED", progress: 100, currentStep: "정제 완료",
     plannedYield: 85, actualYield: 87.4, titer: 44100, volumeL: 5000,
     startedAt: "2026-07-06 09:00", operator: "김공정",
   },
   {
-    id: "b5", batchNo: "B-2026-0709-01", product: "Penicillin V", strain: "P. chrysogenum PC-7",
+    id: "b5", batchNo: "B-2026-0709-01", product: "배양제품 B", strain: "생산균주 ST-7",
     reactor: "FR-102", status: "COMPLETED", progress: 100, currentStep: "정제 완료",
     plannedYield: 82, actualYield: 79.1, titer: 36900, volumeL: 5000,
     startedAt: "2026-07-05 14:30", operator: "박배양",
   },
   {
-    id: "b6", batchNo: "B-2026-0715-01", product: "Penicillin G", strain: "P. chrysogenum PC-9",
+    id: "b6", batchNo: "B-2026-0715-01", product: "배양제품 A", strain: "생산균주 ST-9",
     reactor: "FR-104", status: "PLANNED", progress: 0, currentStep: "배양 대기",
     plannedYield: 85, actualYield: null, titer: null, volumeL: 5000,
     startedAt: "2026-07-15 08:00", operator: "이발효",
   },
   {
-    id: "b7", batchNo: "B-2026-0708-02", product: "Penicillin G", strain: "P. chrysogenum PC-9",
+    id: "b7", batchNo: "B-2026-0708-02", product: "배양제품 A", strain: "생산균주 ST-9",
     reactor: "FR-103", status: "ON_HOLD", progress: 45, currentStep: "본배양 (보류)",
     plannedYield: 85, actualYield: null, titer: 21000, volumeL: 5000,
     startedAt: "2026-07-08 11:15", operator: "최품질",
@@ -172,7 +172,7 @@ export interface Series {
   hours: number[];
 }
 
-// 페니실린 발효 프로파일: 0~120h, 시간당 1포인트
+// 발효 프로파일: 0~120h, 시간당 1포인트
 export function cultureSeries(seed = 42, hours = 120): Series[] {
   const rnd = seeded(seed);
   const t = Array.from({ length: hours + 1 }, (_, i) => i);
@@ -189,7 +189,7 @@ export function cultureSeries(seed = 42, hours = 120): Series[] {
     const feed = 6 * Math.max(0, Math.sin(h / 9));
     return round(Math.max(1, base + feed + jitter(1.2)), 2);
   });
-  // 역가(페니실린): 성장 후 생산기에 상승
+  // 역가: 성장 후 생산기에 상승
   const titer = t.map((h) => {
     const v = 46000 / (1 + Math.exp(-(h - 60) / 15));
     return round(v + jitter(400), 0);

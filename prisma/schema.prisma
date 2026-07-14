@@ -1,4 +1,4 @@
-// Penicillin MES — Prisma schema
+// 배양공정 MES — Prisma schema
 // 배양 공정관리(발효) 도메인 + next-auth 인증 모델
 // learn more: https://pris.ly/d/prisma-schema
 
@@ -70,12 +70,12 @@ model VerificationToken {
 // 배양 공정 도메인
 // ─────────────────────────────────────────────
 
-/// 생산 제품 (예: Penicillin G)
+/// 생산 제품 (예: 배양제품 A)
 model Product {
   id          String   @id @default(cuid())
-  code        String   @unique // 제품 코드 (예: PEN-G)
-  name        String // 제품명 (예: Penicillin G)
-  strain      String? // 생산 균주 (예: Penicillium chrysogenum)
+  code        String   @unique // 제품 코드 (예: PDT-A)
+  name        String // 제품명 (예: 배양제품 A)
+  strain      String? // 생산 균주 (예: 생산균주 ST-9)
   targetTiter Float? // 목표 역가 (U/mL)
   description String?
   batches     Batch[]

@@ -71,7 +71,7 @@ export default function JoinPage() {
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary/15 text-primary">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3h6M10 3v6l-5.5 9A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg>
               </span>
-              <h1 className="text-[22px] font-bold tracking-tight text-[var(--text-primary)]">Penicillin MES 계정 만들기</h1>
+              <h1 className="text-[22px] font-bold tracking-tight text-[var(--text-primary)]">배양공정 MES 계정 만들기</h1>
             </div>
             <p className="text-[14px] text-[var(--text-secondary)]">현장 공정관리 시스템에 사용할 계정을 등록하세요</p>
           </div>

@@ -27,7 +27,7 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-7xl space-y-6">
       <header>
         <h1 className="text-2xl font-bold tracking-tight">대시보드</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">페니실린 배양 공정 실시간 현황 요약</p>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">배양 공정 실시간 현황 요약</p>
       </header>
 
       {/* KPI */}
@@ -48,7 +48,7 @@ export default async function DashboardPage() {
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h2 className="text-sm font-semibold">역가(Titer) 추이 · B-2026-0714-01</h2>
-              <p className="text-[12px] text-[var(--text-tertiary)]">본배양 경과 시간별 페니실린 역가 (U/mL)</p>
+              <p className="text-[12px] text-[var(--text-tertiary)]">본배양 경과 시간별 역가 (U/mL)</p>
             </div>
             <StatusBadge label="LIVE" color="var(--run)" />
           </div>

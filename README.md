@@ -1,6 +1,6 @@
-# Penicillin MES — 배양 공정관리 시스템
+# 배양공정 MES — 배양 공정관리 시스템
 
-페니실린 발효/배양 공정을 실행·모니터링하기 위한 **MES(Manufacturing Execution System)** 프레임입니다.
+발효/배양 공정을 실행·모니터링하기 위한 **MES(Manufacturing Execution System)** 프레임입니다.
 현재 단계는 **틀/프레임 + 더미 배양데이터**로 구성되어 있으며, 실제 DB 연동 로직은 이후 단계에서 붙입니다.
 
 ## 주요 화면
@@ -13,7 +13,7 @@
 
 ## 도메인 모델 (Prisma)
 
-- `Product` — 생산 제품 (예: Penicillin G)
+- `Product` — 생산 제품 (예: 배양제품 A)
 - `Reactor` — 발효조/배양기 설비
 - `Batch` — 배치/로트 (제품·발효조·상태·수율)
 - `ProcessStep` — 공정 단계 (종균배양 → 본배양 → 회수 → 정제)
